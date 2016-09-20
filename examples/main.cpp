@@ -9,4 +9,6 @@ int main()
 	file << tree;
 	BinarySearchTree<int> tree2;
 	std::cin >> tree2;
+	auto a = tree.find(8);
+	std::cout << (*a) << std:: endl;
 }
