@@ -8,5 +8,6 @@ int main()
 	std::cout << tree;
 	std::ofstream file("C:\\tree.txt");
 	file << tree;
-	file.close();
+	BinarySearchTree<int> tree2;
+	std::cin >> tree2;
 }
