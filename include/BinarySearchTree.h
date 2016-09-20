@@ -67,6 +67,8 @@ public:
 	BinarySearchTree() {};
 	BinarySearchTree(const std::initializer_list<T> & list)
 	{
+		size_ = 0;
+		root_ = nullptr;
 		for (auto it = list.begin(); it != list.end(); ++it)
 		{
 			insert(*it);
