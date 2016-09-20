@@ -48,8 +48,8 @@ class BinarySearchTree
 {
 private:
 	struct Node {
-		Node * left_; //указатель на левого сына
-		Node * right_; //указатель на правого сына
+		Node* left_; //указатель на левого сына
+		Node* right_; //указатель на правого сына
 		T value_; //значение
 
 		Node(T value) : value_(value), left_(nullptr), right_(nullptr) {}; //конструктор, инициализирующий узел
@@ -60,7 +60,7 @@ private:
 		}
 	};
 
-	Node *root_; //указатель на корень
+	Node* root_; //указатель на корень
 	size_t size_; //размер дерева
 
 public:
@@ -73,7 +73,7 @@ public:
 		};
 
 	};
-	void Preorder(std::ostream & str, Node *ThisNode) const //Прямой обход дерева
+	void Preorder(std::ostream & str, Node* ThisNode) const noexcept //Прямой обход дерева
 	{
 		if (!ThisNode) { return; }
 		str << ThisNode->value_ << " ";
@@ -99,8 +99,8 @@ public:
 	auto insert(const T & value) noexcept -> bool
 	{
 
-		Node *ThisNode = root_;
-		Node *x = nullptr;
+		Node* ThisNode = root_;
+		Node* x = nullptr;
 		if (root_ == nullptr)
 		{
 			root_ = new Node(value);
@@ -137,7 +137,7 @@ public:
 
 	auto find(const T & value) const noexcept -> const T *
 	{
-		Node *ThisNode = root_;
+		Node* ThisNode = root_;
 	if (!root_)
 	{
 		return nullptr;
@@ -154,7 +154,6 @@ public:
 		}
 		else if (value == ThisNode->value_)
 		{
-			std::cout << ThisNode->value_ << " was found" << std::endl;
 			return &ThisNode->value_;
 		}
 	}
