@@ -64,7 +64,11 @@ private:
 	size_t size_; //размер дерева
 
 public:
-	BinarySearchTree() {};
+	BinarySearchTree() 
+	{
+		size_ = 0;
+		root_ = nullptr;
+	};
 	BinarySearchTree(const std::initializer_list<T> & list)
 	{
 		size_ = 0;
@@ -101,37 +105,37 @@ public:
 	auto insert(const T & value) noexcept -> bool
 	{
 
-		Node* ThisNode = root_;
-		Node* x = nullptr;
+		Node* thisNode = root_;
+		Node* myNode = nullptr;
 		if (root_ == nullptr)
 		{
 			root_ = new Node(value);
 			size_++;
 			return true;
 		}
-		while (ThisNode)
+		while (thisNode)
 		{
-			x = ThisNode;
-			if (value == x->value_)
+			myNode = thisNode;
+			if (value == myNode->value_)
 			{
 				return false;
 			}
-			else if (value < x->value_)
+			else if (value < myNode->value_)
 			{
-				ThisNode = x->left_;
+				thisNode = myNode->left_;
 			}
-			else if (value > x->value_)
+			else if (value > myNode->value_)
 			{
-				ThisNode = x->right_;
+				thisNode = myNode->right_;
 			}
 		}
-		if (value < x->value_)
+		if (value < myNode->value_)
 		{
-			x->left_ = new Node(value);
+			myNode->left_ = new Node(value);
 		}
 		else
 		{
-			x->right_ = new Node(value);
+			myNode->right_ = new Node(value);
 		};
 		size_++;
 		return true;
