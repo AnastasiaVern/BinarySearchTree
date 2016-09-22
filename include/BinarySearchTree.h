@@ -16,14 +16,14 @@ class BinarySearchTree;
 template <typename T>
 std::ofstream & operator << (std::ofstream & out, const BinarySearchTree<T> & tree)
 {
-	tree.Preorder(out, tree.GetRoot());
+	tree.DoPreorderWalk(out, tree.GetRoot());
 	return out;
 };
 
 template <typename T>
 std::ostream & operator << (std::ostream & out, const BinarySearchTree<T> & tree)
 {
-	tree.Preorder(out, tree.GetRoot());
+	tree.DoPreorderWalk(out, tree.GetRoot());
 	return out;
 };
 
@@ -33,12 +33,13 @@ std::istream & operator >> (std::istream & in, BinarySearchTree<T> & tree)
 	T value;
 	int size;
 	std::cout << "Size: ";
-	in >> size;
-
-	for (int i = 0; i < size; i++)
-	{
-		in >> value;
-		tree.insert(value);
+	if (in >> size) {
+		for (int i = 0; i < size; i++)
+		{
+			if (in >> value) {
+				tree.insert(value);
+			}
+		}
 	}
 	return in;
 };
@@ -48,8 +49,8 @@ class BinarySearchTree
 {
 private:
 	struct Node {
-		Node* left_; //указатель на левого сына
-		Node* right_; //указатель на правого сына
+		Node * left_; //указатель на левого сына
+		Node * right_; //указатель на правого сына
 		T value_; //значение
 
 		Node(T value) : value_(value), left_(nullptr), right_(nullptr) {}; //конструктор, инициализирующий узел
@@ -79,12 +80,12 @@ public:
 		};
 
 	};
-	void Preorder(std::ostream & str, Node* ThisNode) const noexcept //Прямой обход дерева
+	void DoPreorderWalk(std::ostream & str, Node *this_node) const noexcept //Прямой обход дерева
 	{
-		if (!ThisNode) { return; }
-		str << ThisNode->value_ << " ";
-		Preorder(str, ThisNode->left_);
-		Preorder(str, ThisNode->right_);
+		if (!this_node) { return; }
+		str << this_node->value_ << " ";
+		DoPreorderWalk(str, this_node->left_);
+		DoPreorderWalk(str, this_node->right_);
 	}
 	Node* GetRoot() const
 	{
@@ -105,37 +106,37 @@ public:
 	auto insert(const T & value) noexcept -> bool
 	{
 
-		Node* thisNode = root_;
-		Node* myNode = nullptr;
+		Node* this_node = root_;
+	Node* my_node = nullptr;
 		if (root_ == nullptr)
 		{
 			root_ = new Node(value);
 			size_++;
 			return true;
 		}
-		while (thisNode)
+		while (this_node)
 		{
-			myNode = thisNode;
-			if (value == myNode->value_)
+			my_node = this_node;
+			if (value == my_node->value_)
 			{
 				return false;
 			}
-			else if (value < myNode->value_)
+			else if (value < my_node->value_)
 			{
-				thisNode = myNode->left_;
+				this_node = my_node->left_;
 			}
-			else if (value > myNode->value_)
+			else if (value > my_node->value_)
 			{
-				thisNode = myNode->right_;
+				this_node = my_node->right_;
 			}
 		}
-		if (value < myNode->value_)
+		if (value < my_node->value_)
 		{
-			myNode->left_ = new Node(value);
+			my_node->left_ = new Node(value);
 		}
 		else
 		{
-			myNode->right_ = new Node(value);
+			my_node->right_ = new Node(value);
 		};
 		size_++;
 		return true;
@@ -143,24 +144,24 @@ public:
 
 	auto find(const T & value) const noexcept -> const T *
 	{
-		Node* ThisNode = root_;
-	if (!root_)
+		Node *this_node = root_;
+	if (size_== 0)
 	{
 		return nullptr;
 	};
-	while (ThisNode)
+	while (this_node)
 	{
-		if (value < ThisNode->value_)
+		if (value < this_node->value_)
 		{
-			ThisNode = ThisNode->left_;
+			this_node = this_node->left_;
 		}
-		else if (value > ThisNode->value_)
+		else if (value > this_node->value_)
 		{
-			ThisNode = ThisNode->right_;
+			this_node = this_node->right_;
 		}
-		else if (value == ThisNode->value_)
+		else if (value == this_node->value_)
 		{
-			return &ThisNode->value_;
+			return &this_node->value_;
 		}
 	}
 	return nullptr;
