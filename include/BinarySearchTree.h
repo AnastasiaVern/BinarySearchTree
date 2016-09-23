@@ -65,15 +65,9 @@ private:
 	size_t size_; //размер дерева
 
 public:
-	BinarySearchTree() 
+	BinarySearchTree() : size_(0), root_(nullptr) {};
+	BinarySearchTree(const std::initializer_list<T> & list) : size_(0), root_(nullptr)
 	{
-		size_ = 0;
-		root_ = nullptr;
-	};
-	BinarySearchTree(const std::initializer_list<T> & list)
-	{
-		size_ = 0;
-		root_ = nullptr;
 		for (auto it = list.begin(); it != list.end(); ++it)
 		{
 			insert(*it);
