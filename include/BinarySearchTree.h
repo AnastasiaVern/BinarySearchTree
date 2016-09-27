@@ -12,21 +12,14 @@
 template<typename T>
 class BinarySearchTree;
 
-
-template <typename T>
-std::ofstream & operator << (std::ofstream & out, const BinarySearchTree<T> & tree)
-{
-	tree.DoPreorderWalk(out, tree.GetRoot());
-	return out;
-};
-
+//вывод
 template <typename T>
 std::ostream & operator << (std::ostream & out, const BinarySearchTree<T> & tree)
 {
 	tree.DoPreorderWalk(out, tree.GetRoot());
 	return out;
 };
-
+//ввод
 template <typename T>
 std::istream & operator >> (std::istream & in, BinarySearchTree<T> & tree)
 {
@@ -43,28 +36,63 @@ std::istream & operator >> (std::istream & in, BinarySearchTree<T> & tree)
 	}
 	return in;
 };
+//вывод в файл
+template <typename T>
+std::ofstream & operator << (std::ofstream & out, const BinarySearchTree<T> & tree)
+{
+	tree.DoPreorderWalk(out, tree.GetRoot());
+	return out;
+};
+//ввод в файл
+template <typename T>
+std:: ifstream & operator >> (std::ifstream& in, BinarySearchTree<T>& tree)
+{
+	T value;
+		while (in >> value) {
+				tree.insert(value);
+		};
+	return in;
+};
+
 
 template<typename T>
 class BinarySearchTree
 {
+
 private:
 	struct Node {
 		Node * left_; //указатель на левого сына
 		Node * right_; //указатель на правого сына
 		T value_; //значение
 
+		
 		Node(T value) : value_(value), left_(nullptr), right_(nullptr) {}; //конструктор, инициализирующий узел
+		Node* memcpy() 
+		{
+			auto node = new Node(value_);
+			if (right_ != nullptr) 
+			{
+				node->right_ = right_->memcpy();
+			}
+			if (left_ != nullptr) 
+			{
+				node->left_ = left_->memcpy();
+			}
+			return node;
+		}
 		~Node()
 		{
 			delete left_;
 			delete right_;
 		}
-	};
 
+	};
+	
 	Node* root_; //указатель на корень
 	size_t size_; //размер дерева
 
 public:
+
 	BinarySearchTree() : size_(0), root_(nullptr) {};
 	BinarySearchTree(const std::initializer_list<T> & list) : size_(0), root_(nullptr)
 	{
@@ -81,27 +109,45 @@ public:
 		DoPreorderWalk(str, this_node->left_);
 		DoPreorderWalk(str, this_node->right_);
 	}
+	void DoPostorderWalk(std::ostream &str, Node *this_node) const noexcept //Симметричный обход дерева
+	{
+		if (!this_node) { return;  }
+		DoPostorderWalk(str, this_node->right_);
+		str << this_node->value_ << " ";
+		DoPostorderWalk(str, this_node->left_);
+	}
 	Node* GetRoot() const
 	{
 		return root_;
 	}
-	~BinarySearchTree()
-	{
-		delete root_;
-	};
+	auto compare(const Node * node1, const Node * node2) {
 
-
+		if (node1 == nullptr && node2 == nullptr) return(true);
+		else if (node1 != nullptr && node2 != nullptr)
+		{
+			return(
+				node1->value_ == node2->value_ &&
+				compare(node1->left_, node2->left_) &&
+				compare(node1->right_, node2->right_)
+				);
+		}
+		else return(false);
+	}
 	auto size() noexcept -> size_t
 	{
 		return size_;
 	};
 
+	~BinarySearchTree()
+	{
+		delete root_;
+	};
 
 	auto insert(const T & value) noexcept -> bool
 	{
 
 		Node* this_node = root_;
-	Node* my_node = nullptr;
+		Node* my_node = nullptr;
 		if (root_ == nullptr)
 		{
 			root_ = new Node(value);
@@ -139,7 +185,7 @@ public:
 	auto find(const T & value) const noexcept -> const T *
 	{
 		Node *this_node = root_;
-	if (size_== 0)
+	if (size_ == 0)
 	{
 		return nullptr;
 	};
@@ -160,4 +206,37 @@ public:
 	}
 	return nullptr;
 	};
+	auto operator = (const BinarySearchTree& tree)->BinarySearchTree& //оператор копирования
+	{
+		if (this == &tree)
+		{
+			return *this;
+		}
+		delete root_;
+		size_ = tree.size_;
+		root_ = tree.root_->memcpy();
+		return *this;
+	};
+	auto operator = (BinarySearchTree&& tree)->BinarySearchTree& //оператор перемещения
+	{
+		if (this == &tree)
+		{
+			return *this;
+		}
+		delete root_;
+		size_ = tree.size_;
+		root_ = tree.root_;
+		tree.root_ = nullptr;
+
+		return *this;
+	};
+	auto operator == (const BinarySearchTree& tree) -> bool //оператор сравнения
+	{
+		if (size_ != tree.size_) { return false; }
+		else
+		{
+			compare(root_, tree.root_);
+		}
+	};
+	
 };
