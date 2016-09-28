@@ -6,5 +6,6 @@ compiler:
           packages:
             - cmake
 script:
-  - mkdir build && cd build && cmake ..
-  - make
+  - mkdir build 
+  - cd build && 
+  - cmake .. && make
