@@ -230,7 +230,7 @@ public:
 
 		return *this;
 	};
-	auto operator == (const BinarySearchTree& tree) -> bool //оператор сравнения
+	auto operator == (const BinarySearchTree& tree) //оператор сравнения
 	{
 		if (size_ != tree.size_) { return false; }
 		else
