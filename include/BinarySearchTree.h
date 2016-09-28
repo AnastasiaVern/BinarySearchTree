@@ -102,6 +102,17 @@ public:
 		};
 
 	};
+	BinarySearchTree(const BinarySearchTree& tree) //Конструктор копирования
+	{
+		root_=tree.root_->memcpy();
+	};
+	BinarySearchTree( BinarySearchTree&& tree) //Конструктор перемещения
+	{
+		size_=tree.size_;
+		tree.size_=0;
+		root_=tree.root_;
+		tree.root_=nullptr;
+	};
 	void DoPreorderWalk(std::ostream & str, Node *this_node) const noexcept //Прямой обход дерева
 	{
 		if (!this_node) { return; }
