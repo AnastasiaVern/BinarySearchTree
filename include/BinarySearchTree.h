@@ -120,7 +120,7 @@ public:
 	{
 		return root_;
 	}
-	auto compare(const Node * node1, const Node * node2) {
+	auto compare(const Node * node1, const Node * node2) const -> bool{
 
 		if (node1 == nullptr && node2 == nullptr) return(true);
 		else if (node1 != nullptr && node2 != nullptr)
