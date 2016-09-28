@@ -16,7 +16,7 @@ class BinarySearchTree;
 template <typename T>
 std::ostream & operator << (std::ostream & out, const BinarySearchTree<T> & tree)
 {
-	tree.DoPreorderWalk(out, tree.GetRoot());
+	tree.DoPostorderWalk(out, tree.GetRoot());
 	return out;
 };
 //ввод
