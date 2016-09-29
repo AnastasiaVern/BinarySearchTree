@@ -10,13 +10,14 @@
 #include <iostream>
 #include <fstream>
 template<typename T>
+template<typename T>
 class BinarySearchTree;
 
 //вывод
 template <typename T>
 std::ostream & operator << (std::ostream & out, const BinarySearchTree<T> & tree)
 {
-	tree.DoPostorderWalk(out, tree.GetRoot());
+	tree.DoInorderWalk(out, tree.GetRoot());
 	return out;
 };
 //ввод
@@ -104,14 +105,14 @@ public:
 	};
 	BinarySearchTree(const BinarySearchTree& tree) //Конструктор копирования
 	{
-		root_=tree.root_->memcpy();
+		root_ = tree.root_->memcpy();
 	};
-	BinarySearchTree( BinarySearchTree&& tree) //Конструктор перемещения
+	BinarySearchTree(BinarySearchTree&& tree) //Конструктор перемещения
 	{
-		size_=tree.size_;
-		tree.size_=0;
-		root_=tree.root_;
-		tree.root_=nullptr;
+		size_ = tree.size_;
+		tree.size_ = 0;
+		root_ = tree.root_;
+		tree.root_ = nullptr;
 	};
 	void DoPreorderWalk(std::ostream & str, Node *this_node) const noexcept //Прямой обход дерева
 	{
@@ -120,18 +121,18 @@ public:
 		DoPreorderWalk(str, this_node->left_);
 		DoPreorderWalk(str, this_node->right_);
 	}
-	void DoPostorderWalk(std::ostream &str, Node *this_node) const noexcept //Симметричный обход дерева
+	void DoInorderWalk(std::ostream &str, Node *this_node) const noexcept //Симметричный обход дерева
 	{
 		if (!this_node) { return;  }
-		DoPostorderWalk(str, this_node->right_);
+		DoInorderWalk(str, this_node->right_);
 		str << this_node->value_ << " ";
-		DoPostorderWalk(str, this_node->left_);
+		DoInorderWalk(str, this_node->left_);
 	}
 	Node* GetRoot() const
 	{
 		return root_;
 	}
-	auto compare(const Node * node1, const Node * node2) const -> bool{
+	auto compare(const Node * node1, const Node * node2) const noexcept -> bool {
 
 		if (node1 == nullptr && node2 == nullptr) return(true);
 		else if (node1 != nullptr && node2 != nullptr)
@@ -144,7 +145,7 @@ public:
 		}
 		else return(false);
 	}
-	auto size() noexcept -> size_t
+	auto size() const noexcept -> size_t
 	{
 		return size_;
 	};
@@ -236,12 +237,13 @@ public:
 		}
 		delete root_;
 		size_ = tree.size_;
+		size_ = 0;
 		root_ = tree.root_;
 		tree.root_ = nullptr;
 
 		return *this;
 	};
-	auto operator == (const BinarySearchTree& tree) const -> bool //оператор сравнения
+	auto operator == (const BinarySearchTree& tree) -> bool //оператор сравнения
 	{
 		if (size_ != tree.size_) { return false; }
 		else
