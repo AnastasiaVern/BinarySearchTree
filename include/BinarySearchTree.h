@@ -10,7 +10,6 @@
 #include <iostream>
 #include <fstream>
 template<typename T>
-template<typename T>
 class BinarySearchTree;
 
 //вывод
