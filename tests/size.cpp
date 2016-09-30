@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "BinarySearchTree"
+#include <BinarySearchTree.hpp>
 SCENARIO ("Size of empty tree must be 0", "[size 0]")
 {
     GIVEN ("tree is empty")
