@@ -45,7 +45,8 @@ SCENARIO ("If object < root")
         WHEN ("insert")
         {
             tree.insert(object);
-            REQUIRE(tree==rez);
+            THEN ("put it on the left") { REQUIRE(tree==rez);}
+           
         };
     }
 }
@@ -60,9 +61,10 @@ SCENARIO ("If object > root")
         WHEN ("insert")
         {
             tree.insert(object);
-            REQUIRE(tree==rez);
+            THEN ("put it on the right") {REQUIRE(tree==rez);}
         };
     }
+}
 SCENARIO ("If object already exists")
 {
     GIVEN ("object")
