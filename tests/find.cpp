@@ -50,7 +50,7 @@ SCENARIO ("If const or non-const")
             }
         }
         WHEN ("it do not exists") {
-            int object=6;
+            int object=7;
             THEN ("result must be nullptr")
             {
                 REQUIRE(t1.find(object)==nullptr);
