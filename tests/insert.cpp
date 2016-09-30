@@ -70,7 +70,7 @@ SCENARIO ("If object already exists")
     GIVEN ("object")
     {
         BinarySearchTree <int> tree={1,2};
-        int object=5;
+        int object=2;
         auto currsize=tree.size();
         WHEN ("insert")
         {
