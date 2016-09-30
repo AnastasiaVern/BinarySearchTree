@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "BinarySearchTree"
+#include <BinarySearchTree.hpp>
 SCENARIO ("If object already exists")
 {
     GIVEN ("object")
