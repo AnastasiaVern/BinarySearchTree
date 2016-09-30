@@ -34,6 +34,36 @@ SCENARIO ("If object doesn't exist")
 
     }
 }
+SCENARIO ("If object < root")
+{
+    GIVEN ("object and root")
+    {
+        BinarySearchTree <int> tree={1,2};
+        int object=5;
+        BinarySearchTree <int> rez={1,2,5};
+
+        WHEN ("insert")
+        {
+            tree.GetRoot()->left_=tree.insert(object);
+            REQUIRE(tree==rez);
+        };
+    }
+}
+SCENARIO ("If object > root")
+{
+    GIVEN ("object and root")
+    {
+        BinarySearchTree <int> tree={1,2};
+        int object=3;
+        BinarySearchTree <int> rez={1,2,3};
+
+        WHEN ("insert")
+        {
+            tree.GetRoot()->right_=tree.insert(object);
+            REQUIRE(tree==rez);
+        };
+    }
+}
 SCENARIO ("If object already exists")
 {
     GIVEN ("object")
