@@ -95,7 +95,7 @@ SCENARIO ("If object doesn't exist")
             tree.insert(object);
             THEN ("if it is not in the tree")
             {
-                REQUIRE(currsize++);
+                REQUIRE(tree.size()=currsize+1);
             }
         };
 
