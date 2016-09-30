@@ -19,11 +19,12 @@ SCENARIO ("Size of not empty tree is not 0!", "[size !0]")
 {
     GIVEN("tree is not empty")
     {
+        BinarySearchTree <int> tree = {1};
         WHEN("decide size")
          {
              THEN ("size is not 0")
              {
-              REQUIRE(tree.size!=0)   ;
+              REQUIRE(tree.size()!=0)   ;
              }
          }
     }
