@@ -44,7 +44,7 @@ SCENARIO ("If object < root")
 
         WHEN ("insert")
         {
-            tree.GetRoot()->left_=tree.insert(object);
+            tree.insert(object);
             REQUIRE(tree==rez);
         };
     }
@@ -59,11 +59,10 @@ SCENARIO ("If object > root")
 
         WHEN ("insert")
         {
-            tree.GetRoot()->right_=tree.insert(object);
+            tree.insert(object);
             REQUIRE(tree==rez);
         };
     }
-}
 SCENARIO ("If object already exists")
 {
     GIVEN ("object")
