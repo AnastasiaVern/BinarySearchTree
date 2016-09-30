@@ -25,7 +25,6 @@ SCENARIO ("Insert item when object doesn't exist")
         int object=5;
         WHEN ("insert")
         {
-            tree.insert(object);
             THEN ("if it is not in the tree")
             {
                 REQUIRE(tree.insert(object));
@@ -38,15 +37,17 @@ SCENARIO ("If object < root")
 {
     GIVEN ("object and root")
     {
-        BinarySearchTree <int> tree={1,2};
-        int object=5;
-        BinarySearchTree <int> rez={1,2,5};
+        BinarySearchTree <int> tree={5,2};
+        int object=1;
+        BinarySearchTree <int> rez={5,2,1};
 
         WHEN ("insert")
         {
             tree.insert(object);
-            THEN ("put it on the left") { REQUIRE(tree==rez);}
-           
+            THEN ("put it on the left") 
+            { 
+                REQUIRE(tree==rez);
+            }
         };
     }
 }
