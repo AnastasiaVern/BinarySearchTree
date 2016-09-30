@@ -34,7 +34,7 @@ SCENARIO("Size for const & !const ", "[const&!const]")
   GIVEN("const & non-const object")
   {
       BinarySearchTree<int> t1={1,2,3};
-      const BinarySearhTree<int> t2={2,3,4};
+      const BinarySearchTree<int> t2={2,3,4};
       WHEN ("decide size")
       {
        THEN ("sizes must be equal")
