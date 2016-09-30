@@ -1,6 +1,6 @@
 #include "catch.hpp"
 #include <BinarySearchTree.hpp>
-SCENARIO ("If object exists")
+SCENARIO ("Find item when object exists")
 {
     GIVEN ("object")
     {
@@ -17,7 +17,7 @@ SCENARIO ("If object exists")
 
     }
 }
-SCENARIO ("If object doesn't exist")
+SCENARIO ("Find item when object doesn't exist")
 {
 
     GIVEN("object")
