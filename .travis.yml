@@ -9,4 +9,4 @@ script:
   - mkdir build
   - cd build
   - cmake .. && make
-  - Tests -s -r compact[size 0]
+  - Tests -s -r compact
