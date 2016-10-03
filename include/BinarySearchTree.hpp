@@ -244,11 +244,8 @@ public:
 	};
 	auto operator == (const BinarySearchTree& tree) -> bool //оператор сравнения
 	{
-		if (size_ != tree.size_) { return false; }
-		else
-		{
-			compare(root_, tree.root_);
-		}
+		if (size_ != tree.size_) return false;
+		return compare(root_, tree.root_);
 	};
 	
 };
