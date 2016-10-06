@@ -29,9 +29,14 @@ int main()
 	BinarySearchTree<int> tree2 = {1,2,3,4,5,6};
 
 	std::ifstream file2("C:\\tree33.txt");
-	//Checking ">>" file operator (which is not working by the way!) 
+	//Checking ">>" file operator
 	file2 >> tree2;
 	//Checking move assignment operator
 	tree2 = std::move(tree);
 	std::cout << tree2 << std::endl;
+        BinarySearchTree<int> tree4 = { 6,3,8,7,2,9};
+	if (tree4.remove(3) == true)
+	{
+		std::cout << "After removing the element: " << tree4 << std::endl;
+	}
 }
