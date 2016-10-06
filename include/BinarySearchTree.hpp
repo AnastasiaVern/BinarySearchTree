@@ -9,6 +9,7 @@
 #include <initializer_list>
 #include <iostream>
 #include <fstream>
+#include <memory>
 template<typename T>
 class BinarySearchTree;
 
@@ -61,15 +62,17 @@ class BinarySearchTree
 
 private:
 	struct Node {
-		Node * left_; //указатель на левого сына
-		Node * right_; //указатель на правого сына
+		std::shared_ptr<Node> left_;
+		std::shared_ptr<Node> right_;
+		//Node * left_; //указатель на левого сына
+		//Node * right_; //указатель на правого сына
 		T value_; //значение
 
 		
 		Node(T value) : value_(value), left_(nullptr), right_(nullptr) {}; //конструктор, инициализирующий узел
-		Node* memcpy() 
+		auto memcpy() ->std::shared_ptr<Node>
 		{
-			auto node = new Node(value_);
+			std::shared_ptr<Node> node = std::make_shared <Node>(value_);
 			if (right_ != nullptr) 
 			{
 				node->right_ = right_->memcpy();
@@ -82,13 +85,13 @@ private:
 		}
 		~Node()
 		{
-			delete left_;
-			delete right_;
+			left_=nullptr;
+			right_=nullptr;
 		}
 
 	};
 	
-	Node* root_; //указатель на корень
+	std::shared_ptr<Node>root_; //указатель на корень
 	size_t size_; //размер дерева
 
 public:
@@ -113,25 +116,25 @@ public:
 		root_ = tree.root_;
 		tree.root_ = nullptr;
 	};
-	void DoPreorderWalk(std::ostream & str, Node *this_node) const noexcept //Прямой обход дерева
+	void DoPreorderWalk(std::ostream & str, std::shared_ptr<Node> this_node) const noexcept //Прямой обход дерева
 	{
 		if (!this_node) { return; }
 		str << this_node->value_ << " ";
 		DoPreorderWalk(str, this_node->left_);
 		DoPreorderWalk(str, this_node->right_);
 	}
-	void DoInorderWalk(std::ostream &str, Node *this_node) const noexcept //Симметричный обход дерева
+	void DoInorderWalk(std::ostream &str, std::shared_ptr<Node> this_node) const noexcept //Симметричный обход дерева
 	{
 		if (!this_node) { return;  }
 		DoInorderWalk(str, this_node->right_);
 		str << this_node->value_ << " ";
 		DoInorderWalk(str, this_node->left_);
 	}
-	Node* GetRoot() const
+	auto GetRoot() const -> std::shared_ptr<Node>
 	{
 		return root_;
 	}
-	auto compare(const Node * node1, const Node * node2) const noexcept -> bool {
+	auto compare(const std::shared_ptr<Node>node1,const std::shared_ptr<Node> node2) const noexcept -> bool {
 
 		if (node1 == nullptr && node2 == nullptr) return(true);
 		else if (node1 != nullptr && node2 != nullptr)
@@ -151,17 +154,17 @@ public:
 
 	~BinarySearchTree()
 	{
-		delete root_;
+		root_ = nullptr;
 	};
 
 	auto insert(const T & value) noexcept -> bool
 	{
 
-		Node* this_node = root_;
-		Node* my_node = nullptr;
+		std::shared_ptr<Node>this_node= root_;
+		std::shared_ptr<Node> my_node = nullptr;
 		if (root_ == nullptr)
 		{
-			root_ = new Node(value);
+			root_ = std::make_shared <Node>(value);
 			size_++;
 			return true;
 		}
@@ -183,11 +186,11 @@ public:
 		}
 		if (value < my_node->value_)
 		{
-			my_node->left_ = new Node(value);
+			my_node->left_ = std::make_shared <Node>(value);
 		}
 		else
 		{
-			my_node->right_ = new Node(value);
+			my_node->right_ = std::make_shared <Node>(value);
 		};
 		size_++;
 		return true;
@@ -195,7 +198,7 @@ public:
 
 	auto find(const T & value) const noexcept -> const T *
 	{
-		Node *this_node = root_;
+		auto this_node = root_;
 	if (size_ == 0)
 	{
 		return nullptr;
@@ -204,7 +207,7 @@ public:
 	{
 		if (value < this_node->value_)
 		{
-			this_node = this_node->left_;
+			this_node =this_node->left_;
 		}
 		else if (value > this_node->value_)
 		{
@@ -217,13 +220,67 @@ public:
 	}
 	return nullptr;
 	};
+	auto remove(const T value) -> bool 
+	{
+		if (deletenode(root_, value)) 
+		{
+			size_--;
+			return true;
+		}
+		return false;
+	};
+	auto deletenode(std::shared_ptr<Node> &node, const T& value) ->bool
+	{
+		if (node == nullptr) { return false; }
+		if (value < node->value_)
+		{
+			deletenode(node->left_, value); 
+		}
+		else if (value> node->value_) 
+		{
+			deletenode(node->right_, value); 
+		}
+		else 
+		{
+			if (node->left_ == nullptr && node->right_ == nullptr) //удаляем лист
+			{
+				node=nullptr;
+				return true;
+			}
+			if (node->left_!=nullptr && node->right_==nullptr) //существует левый потомок
+			{
+				node = node->left_;
+				return true;
+			}
+			else if (node->right_!= nullptr && node->left_ == nullptr) //существует правый потомок
+			{
+				node = node->right_;
+				return true;
+			}
+			else if (node->left_ != nullptr && node->right_ != nullptr)  //оба потомка существуют
+			{
+				std::shared_ptr<Node> my_node1 = node->right_;
+				std::shared_ptr<Node> my_node2 =node;
+				while (my_node1->left_ != nullptr) 
+				{
+					my_node2 = my_node1;
+					my_node1= my_node1->left_;
+				}
+				node->value_ = my_node1->value_;
+				my_node2->left_ = nullptr;
+			}
+
+		}
+		return true;
+	}
+	
 	auto operator = (const BinarySearchTree& tree)->BinarySearchTree& //оператор копирования
 	{
 		if (this == &tree)
 		{
 			return *this;
 		}
-		delete root_;
+		root_ = nullptr;
 		size_ = tree.size_;
 		root_ = tree.root_->memcpy();
 		return *this;
@@ -234,7 +291,7 @@ public:
 		{
 			return *this;
 		}
-		delete root_;
+		root_ = nullptr;;
 		size_ = tree.size_;
 		size_ = 0;
 		root_ = tree.root_;
@@ -244,8 +301,11 @@ public:
 	};
 	auto operator == (const BinarySearchTree& tree) -> bool //оператор сравнения
 	{
-		if (size_ != tree.size_) return false;
-		return compare(root_, tree.root_);
+		if (size_ != tree.size_) { return false; }
+		else
+		{
+			compare(root_, tree.root_);
+		}
 	};
 	
 };
