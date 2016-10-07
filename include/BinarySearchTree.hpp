@@ -249,12 +249,12 @@ public:
 			}
 			if (node->left_!=nullptr && node->right_==nullptr) //существует левый потомок
 			{
-				node = node->left_;
+				node = node->right_;
 				return true;
 			}
 			else if (node->right_!= nullptr && node->left_ == nullptr) //существует правый потомок
 			{
-				node = node->right_;
+				node = node->left_;
 				return true;
 			}
 			else if (node->left_ != nullptr && node->right_ != nullptr)  //оба потомка существуют
