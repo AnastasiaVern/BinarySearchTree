@@ -291,7 +291,7 @@ public:
 		{
 			return *this;
 		}
-		root_ = nullptr;;
+		root_ = nullptr;
 		size_ = tree.size_;
 		size_ = 0;
 		root_ = tree.root_;
