@@ -264,7 +264,7 @@ public:
 		}
 		return node;
 	}
-	auto minimum(std::shared_ptr<Node> node) 
+	auto minimum(std::shared_ptr<Node> node)->std::shared_ptr<Node>
 	{
 		if (node->left_ == nullptr) 
 		{
