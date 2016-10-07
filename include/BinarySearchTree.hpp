@@ -228,10 +228,8 @@ public:
 			return true;
 		}
 		return false;
-	};
-	auto deletenode(std::shared_ptr<Node> &node, const T& value) ->bool
+	};auto deletenode(std::shared_ptr<Node> &node, const T& value)->std::shared_ptr<Node>
 	{
-		if (node == nullptr) { return false; }
 		if (value < node->value_)
 		{
 			deletenode(node->left_, value); 
@@ -245,35 +243,35 @@ public:
 			if (node->left_ == nullptr && node->right_ == nullptr) //удаляем лист
 			{
 				node=nullptr;
-				return true;
+				return node;
 			}
 			if (node->left_!=nullptr && node->right_==nullptr) //существует левый потомок
 			{
 				node = node->right_;
-				return true;
+				return node;
 			}
 			else if (node->right_!= nullptr && node->left_ == nullptr) //существует правый потомок
 			{
 				node = node->left_;
-				return true;
+				return node;
 			}
 			else if (node->left_ != nullptr && node->right_ != nullptr)  //оба потомка существуют
 			{
-				std::shared_ptr<Node> my_node1 = node->right_;
-				std::shared_ptr<Node> my_node2 =node;
-				while (my_node1->left_ != nullptr) 
-				{
-					my_node2 = my_node1;
-					my_node1= my_node1->left_;
-				}
-				node->value_ = my_node1->value_;
-				my_node2->left_ = nullptr;
+				auto curr = minimum(node->right_);
+				node->value_ = curr->value_; 
+				node->right_ = deletenode(node->right_, curr->value_);
 			}
-
 		}
-		return true;
+		return node;
 	}
-	
+	auto minimum(std::shared_ptr<Node> node) 
+	{
+		if (node->left_ == nullptr) 
+		{
+			return node;
+		};
+		return minimum(node->left_);
+	}
 	auto operator = (const BinarySearchTree& tree)->BinarySearchTree& //оператор копирования
 	{
 		if (this == &tree)
