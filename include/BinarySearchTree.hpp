@@ -227,7 +227,7 @@ public:
 			size_--;
 			return true;
 		}
-		return false;
+		else if (size_==0) { return false; }
 	};
 	auto deletenode(std::shared_ptr<Node> &node, const T& value)->std::shared_ptr<Node>
 	{
@@ -307,7 +307,7 @@ public:
 		if (size_ != tree.size_) { return false; }
 		else
 		{
-			compare(root_, tree.root_);
+			return compare(root_, tree.root_);
 		}
 	};
 	
