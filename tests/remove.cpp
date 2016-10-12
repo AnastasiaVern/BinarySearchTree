@@ -5,7 +5,7 @@ SCENARIO ("If we want to delete our main root")
 {
     GIVEN ("Root") {
         BinarySearchTree<int> tree1 = {6, 3, 8, 9, 7, 2};
-        BinarySearchTree<int> tree2={3,8,9,7,2};
+        BinarySearchTree<int> tree2={7,3,2,8,9};;
         WHEN("Delete root")
         {
             tree1.remove(6);
