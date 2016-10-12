@@ -134,7 +134,7 @@ public:
 	{
 		return root_;
 	}
-	auto compare(const std::shared_ptr<Node>node1,const std::shared_ptr<Node> node2) const noexcept -> bool {
+	auto compare(std::shared_ptr<Node>node1, std::shared_ptr<Node> node2) const noexcept -> bool {
 
 		if (node1 == nullptr && node2 == nullptr) return(true);
 		else if (node1 != nullptr && node2 != nullptr)
