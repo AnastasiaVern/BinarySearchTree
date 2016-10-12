@@ -4,14 +4,14 @@ SCENARIO ("If there's neither left and right son")
 {
     GIVEN("node")
     {
-        BinarySearchTree<int> tree={6,3,8,9,7,2};
+        BinarySearchTree<int> tree1={6,3,8,9,7,2};
         BinarySearchTree<int> tree2={6,3,8,9,7};
         WHEN("delete node")
         {
-            tree.remove(2);
+            tree1.remove(2);
             THEN("If it was deleted")
             {
-                REQUIRE(tree.GetRoot()->left_->right_==nullptr);
+                REQUIRE(tree1 ==tree2);
             }
 
         }
