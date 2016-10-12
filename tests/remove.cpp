@@ -1,12 +1,28 @@
 #include "catch.hpp"
 #include <BinarySearchTree.hpp>
+
+SCENARIO ("If we want to delete our main root")
+{
+    GIVEN ("Root") {
+        BinarySearchTree<int> tree1 = {6, 3, 8, 9, 7, 2};
+        BinarySearchTree<int> tree2={3,8,9,7,2};
+        WHEN("Delete root")
+        {
+            tree1.remove(6);
+            THEN ("If it was deleted")
+            {
+                REQUIRE(tree1==tree2);
+            }
+        }
+    }
+}
 SCENARIO ("If there's neither left and right son")
 {
-    GIVEN("node")
+    GIVEN("Node")
     {
         BinarySearchTree<int> tree1={6,3,8,9,7,2};
         BinarySearchTree<int> tree2={6,3,8,9,7};
-        WHEN("delete node")
+        WHEN("Delete node")
         {
             tree1.remove(2);
             THEN("If it was deleted")
@@ -20,11 +36,11 @@ SCENARIO ("If there's neither left and right son")
 }
 SCENARIO ("If there's only left son")
 {
-    GIVEN("node")
+    GIVEN("Node")
     {
         BinarySearchTree<int> tree1={6,3,8,9,7,2};
         BinarySearchTree<int> tree2={6,8,9,7,2};
-        WHEN("delete node")
+        WHEN("Delete node")
         {
         tree1.remove(3);
         THEN("If it was deleted")
@@ -37,7 +53,7 @@ SCENARIO ("If there's only left son")
 }
 SCENARIO ("If there's only right son")
 {
-    GIVEN("node")
+    GIVEN("Node")
     {
         BinarySearchTree<int> tree1={6,3,8,9,2};
         BinarySearchTree<int> tree2={6,3,9,2};
@@ -55,7 +71,7 @@ SCENARIO("If there are both sons")
 {
     BinarySearchTree<int> tree1={6,3,8,9,7,2};
     BinarySearchTree<int> tree2={6,3,9,7,2};
-    WHEN("delete node")
+    WHEN("Delete node")
     {
         tree1.remove(8);
         THEN("If it was deleted")
@@ -68,7 +84,7 @@ SCENARIO("If there are both sons")
 SCENARIO("If we want to delete non existent node")
 {
     BinarySearchTree<int> tree={6,3,8,9,2};
-    WHEN("delete node")
+    WHEN("Delete node")
     {
         tree.remove(120);
         auto curr_size=tree.size();
