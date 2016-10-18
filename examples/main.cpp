@@ -39,4 +39,31 @@ int main()
 	{
 		std::cout << "After removing the element: " << tree4 << std::endl;
 	}
+	//#remove
+	try
+	{
+		tr.remove(0);
+	}
+	catch (const std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+	//#find
+	try
+	{
+		tr.find(3);
+	}
+	catch (const std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+	//#insert
+	try 
+	{
+		tree4.insert(8);
+	}
+	catch (const std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
 }
