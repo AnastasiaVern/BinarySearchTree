@@ -134,7 +134,7 @@ public:
 	{
 		return root_;
 	}
-	auto compare(std::shared_ptr<Node>node1, std::shared_ptr<Node> node2) const noexcept -> bool {
+	auto compare( std::shared_ptr<Node> node1, std::shared_ptr<Node> node2) const noexcept -> bool {
 
 		if (node1 == nullptr && node2 == nullptr) return(true);
 		else if (node1 != nullptr && node2 != nullptr)
@@ -157,9 +157,8 @@ public:
 		root_ = nullptr;
 	};
 
-	auto insert(const T & value) noexcept -> bool
+	auto insert(const T & value) -> bool
 	{
-
 		std::shared_ptr<Node>this_node= root_;
 		std::shared_ptr<Node> my_node = nullptr;
 		if (root_ == nullptr)
@@ -173,7 +172,7 @@ public:
 			my_node = this_node;
 			if (value == my_node->value_)
 			{
-				return false;
+				throw std::logic_error("The element you want to insert already exists");
 			}
 			else if (value < my_node->value_)
 			{
@@ -196,12 +195,12 @@ public:
 		return true;
 	};
 
-	auto find(const T & value) const noexcept -> const T *
+	auto find(const T & value) const -> const T *
 	{
 		auto this_node = root_;
 	if (size_ == 0)
 	{
-		return nullptr;
+		throw std::logic_error("Ooops...We can't find it. The tree is empty!");
 	};
 	while (this_node)
 	{
@@ -220,17 +219,18 @@ public:
 	}
 	return nullptr;
 	};
-	auto remove(const T value) -> bool 
+	auto remove(const T value) -> bool
 	{
 		if (deletenode(root_, value)) 
 		{
 			size_--;
 			return true;
 		}
-		else if (size_==0) { return false; }
+		else if (size_==0) { throw std::logic_error("Ooops...The tree is empty!"); }
 	};
 	auto deletenode(std::shared_ptr<Node> &node, const T& value)->std::shared_ptr<Node>
 	{
+
 		if (node == nullptr) return node;
 		else if (value < node->value_)
 		{
@@ -294,7 +294,7 @@ public:
 		{
 			return *this;
 		}
-		root_ = nullptr;
+		root_ = nullptr;;
 		size_ = tree.size_;
 		size_ = 0;
 		root_ = tree.root_;
