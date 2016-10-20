@@ -17,7 +17,7 @@ SCENARIO ("Insert item when object already exists")
 
     }
 }
-SCENARIO ("If object already exists")
+SCENARIO ("If object already exists (getting exception)")
 {
     GIVEN ("object")
     {
