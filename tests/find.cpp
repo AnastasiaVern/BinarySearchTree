@@ -1,5 +1,17 @@
 #include "catch.hpp"
 #include <BinarySearchTree.hpp>
+
+SCENARIO ("Throwing and catching the exeption")
+{
+   BinarySearchTree<int> t1={};
+    WHEN ("size is 0")
+    {
+             THEN("we can't find elements in an empty tree")
+        {
+         REQUIRE_THROWS( t1.find(4);) ;
+        }
+    }
+}
 SCENARIO ("Find item when object exists")
 {
     GIVEN ("object")
