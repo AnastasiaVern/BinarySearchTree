@@ -1,6 +1,19 @@
 #include "catch.hpp"
 #include <BinarySearchTree.hpp>
-
+SCENARIO ("If we want to delete the element from an empty tree") 
+{
+  GIVEN ("Empty Tree") 
+  {
+      BinarySearchTree<int> t={};
+      WHEN ("Delete the elem") 
+      {
+          THEN ("If the tree is empty ")
+          {
+              REQUIRE_THROWS(t.remove(2););
+          };
+      }
+  }  
+}
 SCENARIO ("If we want to delete our main root")
 {
     GIVEN ("Root") {
