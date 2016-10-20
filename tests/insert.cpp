@@ -1,6 +1,6 @@
 #include "catch.hpp"
 #include <BinarySearchTree.hpp>
-SCENARIO ("Insert item when object already exists")
+/*SCENARIO ("Insert item when object already exists")
 {
     GIVEN ("object")
     {
@@ -16,7 +16,7 @@ SCENARIO ("Insert item when object already exists")
         };
 
     }
-}
+}*/
 SCENARIO ("If object already exists (getting exception)")
 {
     GIVEN ("object")
@@ -81,7 +81,7 @@ SCENARIO ("If object > root")
         };
     }
 }
-SCENARIO ("If object already exists")
+/*SCENARIO ("If object already exists")
 {
     GIVEN ("object")
     {
@@ -98,7 +98,7 @@ SCENARIO ("If object already exists")
         };
 
     }
-}
+}*/
 SCENARIO ("If object doesn't exist")
 {
     GIVEN ("object")
