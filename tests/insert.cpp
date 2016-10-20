@@ -17,6 +17,21 @@ SCENARIO ("Insert item when object already exists")
 
     }
 }
+SCENARIO ("If object already exists (getting exception)")
+{
+    GIVEN ("object")
+    {
+        BinarySearchTree <int> tree={1,2};
+                WHEN ("insert")
+        {
+            THEN ("getting exception")
+            {
+                REQUIRE_THROWS(tree.insert(1););
+            }
+        };
+
+    }
+}
 SCENARIO ("Insert item when object doesn't exist")
 {
     GIVEN ("object")
